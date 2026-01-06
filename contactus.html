@@ -73,8 +73,8 @@ https://templatemo.com/tm-569-edu-meeting
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
-              <li><a href="index.html" class="active">Home</a></li>
-              <li><a href="meetings.html">Events</a></li>
+              <li><a href="index.html" >Home</a></li>
+              <li><a href="meetings.html" >Events</a></li>
               <!-- <li class="scroll-to-section"><a href="#apply">Apply Now</a></li> -->
               <!-- <li class="has-sub">
                               <a href="javascript:void(0)">Pages</a>
@@ -84,7 +84,7 @@ https://templatemo.com/tm-569-edu-meeting
                               </ul>
                           </li> -->
           
-              <li><a href="contactus.html">Contact Us</a></li>
+              <li><a href="contactus.html" class="active">Contact Us</a></li>
             </ul>
             <a class='menu-trigger'>
               <span>Menu</span>
@@ -103,7 +103,7 @@ https://templatemo.com/tm-569-edu-meeting
       <div class="row">
         <div class="col-lg-12">
           <h6>Get all details</h6>
-          <h2>Online & Ofline Teaching and Learning Tools</h2>
+          <h2>Online & Offline Teaching and Learning Tools</h2>
         </div>
       </div>
     </div>
@@ -122,15 +122,23 @@ https://templatemo.com/tm-569-edu-meeting
                   </div>
                   <div class="col-lg-4">
                     <fieldset>
-                      <input name="name" type="text" id="name" placeholder="YOUR NAME...*" required
+                      <input name="name" type="text" id="name" placeholder="YOUR NAME*" required
                         pattern="[A-Za-z\s]+" title="Only letters and spaces allowed" />
                     </fieldset>
                   </div>
+
                   <div class="col-lg-4">
                     <fieldset>
-                      <input name="email" type="email" id="email" placeholder="YOUR EMAIL...*" required
+                      <input name="email" type="email" id="email" placeholder="YOUR EMAIL*" required
                         pattern="^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com)$"
                         title="Enter a valid Gmail, Yahoo, or Outlook email" />
+                    </fieldset>
+                  </div>
+                  <!-- Contact Number -->
+                  <div class="col-lg-4 conditional enquiry feedback others" style="display:none;">
+                    <fieldset>
+                      <input name="contact_number" type="tel" id="contact_number" class="form-control" placeholder="CONTACT NUMBER" required
+                        inputmode="numeric" maxlength="15" />
                     </fieldset>
                   </div>
                   <div class="col-lg-4">
@@ -166,13 +174,7 @@ https://templatemo.com/tm-569-edu-meeting
                       <ul id="facultyList" class="suggestions"></ul>
                     </fieldset>
                   </div>
-                  <!-- Contact Number -->
-                  <div class="col-lg-4 conditional enquiry feedback others" style="display:none;">
-                    <fieldset>
-                      <input name="contact_number" type="tel" id="contact_number" class="form-control" placeholder="CONTACT NUMBER" required
-                        inputmode="numeric" maxlength="15" />
-                    </fieldset>
-                  </div>
+                  
                   <!-- subject -->
                   <div class="col-lg-4 conditional enquiry feedback others" style="display:none;">
                     <fieldset>
@@ -186,7 +188,7 @@ https://templatemo.com/tm-569-edu-meeting
                         placeholder="YOUR MESSAGE..." required=""></textarea>
                     </fieldset>
                   </div>
-
+                  
                   <div class="col-lg-12 conditional enquiry feedback others" style="display:none;">
                     <fieldset>
                       <button type="submit" id="form-submit" class="button">SEND MESSAGE NOW</button>
@@ -205,7 +207,7 @@ https://templatemo.com/tm-569-edu-meeting
                 <h6>Phone Number</h6>
                 <span>+91 8129888511</span>
               </li>
-              <li>
+              <li class="about-li">
                 <h6>Email Address</h6>
                 <span>info@uotech.in</span>
               </li>
@@ -298,6 +300,5 @@ https://templatemo.com/tm-569-edu-meeting
 
 
 </body>
-
 
 </html>
