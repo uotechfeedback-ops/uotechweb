@@ -212,7 +212,9 @@
 .accordion.active .accordion-head .icon {
   transform: rotate(45deg);
 }
-
+.about-li {
+  margin-left: 0;
+}
 
 
 /* ===============================
@@ -275,6 +277,9 @@
 
 /* Mobile-specific fix */
 @media (max-width: 768px) {
+  .about-li {
+  margin-left: 30px;
+}
   .styled-select select {
     padding-right: 38px; /* reduce arrow space */
   }
@@ -282,5 +287,5 @@
   .styled-select::after {
     right: 10px;
   }
-}
 
+}
