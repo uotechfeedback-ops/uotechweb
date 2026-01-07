@@ -1,0 +1,168 @@
+/* ===== Faculty Feedback Form ===== */
+
+#faculty-feedback {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+#faculty-feedback h2,
+#faculty-feedback h4 {
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #1f272b;
+}
+
+#faculty-feedback p {
+  color: #555;
+  font-size: 14px;
+}
+
+/* ===== Inputs & Textareas ===== */
+#faculty-feedback input[type="text"],
+#faculty-feedback input[type="email"],
+#faculty-feedback input[type="tel"],
+#faculty-feedback textarea {
+  width: 100%;
+  height: 46px;
+  border-radius: 6px;
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  padding: 0 15px;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 15px;
+  box-shadow: none;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* Textarea */
+#faculty-feedback textarea {
+  height: 120px;
+  padding-top: 12px;
+  resize: none;
+}
+
+/* Placeholder */
+#faculty-feedback input::placeholder,
+#faculty-feedback textarea::placeholder {
+  color: #999;
+}
+
+/* ===== Focus Style (THICK BLACK like others) ===== */
+#faculty-feedback input:focus,
+#faculty-feedback textarea:focus {
+  border: 2px solid #000;
+  background-color: #fff;
+  box-shadow: none;
+  outline: none;
+}
+
+/* ===== Tables ===== */
+#faculty-feedback table {
+  width: 100%;
+  margin-bottom: 25px;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+#faculty-feedback table th {
+  background: #a12c2f;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  padding: 10px;
+}
+
+#faculty-feedback table td {
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+#faculty-feedback table td:first-child {
+  text-align: left;
+  font-weight: 500;
+}
+
+/* ===== Radio Buttons ===== */
+#faculty-feedback input[type="radio"] {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+/* ===== Labels ===== */
+#faculty-feedback label {
+  font-size: 14px;
+  margin-right: 15px;
+  cursor: pointer;
+  color: #444;
+}
+
+/* ===== Submit Button ===== */
+#faculty-feedback button {
+  background: #a12c2f;
+  color: #fff;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+#faculty-feedback button:hover {
+  background: #7e1f22;
+}
+/* Section Title with Icons */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 30px 0 15px;
+  color: #1f272b;
+}
+
+.section-title i {
+  width: 38px;
+  height: 38px;
+  line-height: 38px;
+  text-align: center;
+  background: #a12c2f;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 16px;
+}
+
+
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 768px) {
+  #faculty-feedback table th,
+  #faculty-feedback table td {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  #faculty-feedback label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: 16px;
+  }
+
+  .section-title i {
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 14px;
+  }
+}
