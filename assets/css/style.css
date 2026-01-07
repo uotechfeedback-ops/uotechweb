@@ -278,7 +278,7 @@
 /* Mobile-specific fix */
 @media (max-width: 768px) {
   .about-li {
-  margin-left: 30px;
+  margin-left: 6px;
 }
   .styled-select select {
     padding-right: 38px; /* reduce arrow space */
@@ -289,3 +289,4 @@
   }
 
 }
+
