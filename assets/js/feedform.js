@@ -38,7 +38,12 @@ const faculties = [
   "Ranjith Kumar Nair",
   "Nidhin M",
   "Joji Jose",
-  "Sulfikar N"
+  "Sulfikar N",
+  "Ambily Rajesh",
+  "Ajith Kumar",
+  "Agra Akhil",
+  "Sooraj Kiran sunny",
+  "Krishnapriya N R"
 ];
 
 const facultyInput = document.getElementById("faculty");
@@ -168,12 +173,44 @@ document.querySelectorAll(".accordion-head").forEach(head => {
     accordion.classList.toggle("active");
   });
 });
+/*********************************
+ * CALCULATE OVERALL AVERAGE SCORE
+ *********************************/
+function calculateOverallAverage() {
+  let total = 0;
+  let count = 0;
+
+  // Select all checked radio buttons inside the form
+  document.querySelectorAll('#faculty-feedback input[type="radio"]:checked')
+    .forEach(radio => {
+      const value = parseInt(radio.value);
+      if (!isNaN(value)) {
+        total += value;
+        count++;
+      }
+    });
+
+  // Prevent division by zero
+  if (count === 0) return 0;
+
+  // Average rounded to 2 decimals
+  return (total / count).toFixed(2);
+}
 
 /***********************
  * FORM SUBMISSION (AJAX)
  ***********************/
 $("#faculty-feedback").submit((e) => {
   e.preventDefault();
+    // 🔥 Calculate average
+  const averageScore = calculateOverallAverage();
+  $("#overall_average_score").val(averageScore);
+
+  // Optional validation
+  if (averageScore == 0) {
+    alert("Please rate at least one criteria before submitting.");
+    return;
+  }
 
   $("#form-submit").prop("disabled", true).text("Sending...");
 
