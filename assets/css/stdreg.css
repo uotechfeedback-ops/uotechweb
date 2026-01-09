@@ -1,0 +1,219 @@
+/* =========================
+   GLOBAL
+========================= */
+body {
+  font-family: "Poppins", Arial, sans-serif;
+  background: #f2f2f2;
+}
+
+/* =========================
+   FORM CONTAINER
+========================= */
+#student-registration {
+  max-width: 900px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+#student-registration h2 {
+  margin-bottom: 8px;
+}
+
+#student-registration h4 {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  color: #1f272b;
+}
+
+#student-registration p {
+  color: #555;
+  font-size: 14px;
+}
+
+/* =========================
+   GRID LAYOUT
+========================= */
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+/* =========================
+   INPUTS
+========================= */
+input,
+textarea,
+select {
+  width: 100%;
+  height: 46px;
+  padding: 0 14px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: #f7f7f7;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+textarea {
+  height: 90px;
+  padding-top: 10px;
+  resize: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border: 2px solid #000;
+  background: #fff;
+}
+
+/* =========================
+   FLOATING LABEL (DATE)
+========================= */
+.floating-group {
+  position: relative;
+  width: 100%;
+}
+
+.floating-group input {
+  height: 48px;
+  padding: 18px 14px 6px;
+}
+
+.floating-group label {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #999;
+  pointer-events: none;
+  background: #f7f7f7;
+  padding: 0 6px;
+  transition: all 0.2s ease;
+}
+
+/* Float effect */
+.floating-group input:focus + label,
+.floating-group input:valid + label {
+  top: -7px;
+  font-size: 12px;
+  color: #000;
+}
+
+/* =========================
+   AUTOCOMPLETE SUGGESTIONS
+========================= */
+.suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-top: none;
+  max-height: 220px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: none;
+  z-index: 1000;
+}
+
+.suggestions li {
+  padding: 10px 14px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.suggestions li:hover {
+  background-color: #f0f0f0;
+}
+
+/* =========================
+   CHECKBOXES
+========================= */
+#student-registration input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.checkbox-group {
+  margin-top: 8px;
+}
+
+.checkbox-group label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 20px;
+  font-size: 14px;
+}
+
+/* Declaration */
+.declaration {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+button {
+  margin-top: 30px;
+  padding: 12px 30px;
+  background: #a12c2f;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #7e1f22;
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+
+  #student-registration {
+    padding: 20px;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+  }
+
+  input,
+  textarea,
+  select {
+    height: 50px;
+    font-size: 15px;
+  }
+
+  .floating-group input {
+    height: 52px;
+  }
+
+  .checkbox-group label {
+    display: flex;
+    margin-bottom: 8px;
+  }
+
+  button {
+    width: 100%;
+  }
+}

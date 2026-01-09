@@ -87,25 +87,52 @@ facultyInput.addEventListener("input", () => {
  * DEPARTMENT AUTOCOMPLETE
  **************************/
 const departments = [
-  "Hospital Administration",
-  "Programming Languages",
-  "Python Development",
-  "Networking & Security",
-  "Professional Accounting",
-  "HRM / CRM",
-  "Data Science",
-  "AI & ML",
-  "Digital Marketing with AI",
+  "Professional Diploma in Python",
+  "PHP / Java",
+  "Data Analytics",
+  "MEAN / MERN Stack",
+  "Flutter",
   "Software Testing",
-  "SAP End User & Consultant",
+  "Artificial Intelligence",
+  "Data Science with Generative AI",
   "Medical Coding",
-  "Hardware Engineering",
-  "Logistics & Supply Chain Management",
-  "Cyber Security & Ethical Hacking",
-  "Architectural Softwares (Mechanical, Civil)",
-  "Hospitality Management",
-  "Flutter Development",
-  "MEAN / MERN Stack"
+  "Diploma in Architectural Software",
+  "AI & Data Science",
+  "UI / UX",
+
+  "Certificate in Digital Marketing with AI",
+  "Diploma in Digital Marketing with AI",
+  "Advanced Diploma in Digital Marketing with AI",
+
+  "Diploma in Hardware Engineering",
+  "Diploma in Smartphone Engineering / Laptop Technician",
+  "Diploma in Desktop Engineering / CCTV Technician",
+
+  "CCNA",
+  "MCSE",
+  "RHCE",
+  "AWS / AZURE",
+  "Ethical Hacking + Cyber Security + CCNA + RedHat",
+  "Cyber Security",
+
+  "Professional Diploma in Networking",
+
+  "Certificate in Tally with GST + DTP",
+  "SAP (FICO / MM / SD)",
+  "Professional Diploma in Accounting",
+  "SAP S4 HANA Consultant",
+
+  "Diploma in Logistics & SCM",
+  "PG Diploma in Logistics & SCM",
+  "Advanced Diploma in Logistics & SCM",
+
+  "Diploma in Hospital Administration",
+  "PG Diploma in Hospital Administration",
+  "Advanced Diploma in Hospital Administration",
+
+  "Diploma in HRM",
+  "PG Diploma in HRM",
+  "Diploma in Hospitality Management"
 ];
 
 const deptInput = document.getElementById("department");

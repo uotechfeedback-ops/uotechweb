@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Student Registration | UO Tech</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+
+  <!-- Bootstrap -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.3.3/css/intlTelInput.css" />
+
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="assets/css/fontawesome.css">
+  <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
+  <link rel="stylesheet" href="assets/css/owl.css">
+  <link rel="stylesheet" href="assets/css/lightbox.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/stdreg.css">
+</head>
+
+<body>
+
+  <!-- ===== Sub Header ===== -->
+  <div class="sub-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-sm-8">
+          <p>Innovative Learning. <em>Quality Training.</em> Real Value.</p>
+        </div>
+        <div class="col-lg-4 col-sm-4">
+          <ul class="right-icons">
+            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Header ===== -->
+  <header class="header-area header-sticky">
+    <div class="container">
+      <nav class="main-nav">
+        <a href="index.html" class="logo">
+          <img src="assets/images/logo.png" alt="UO Tech"> UO Tech
+        </a>
+
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="meetings.html">Events</a></li>
+          <li><a href="stdregister.html" class="active">Register</a></li>
+          <li><a href="feedback.html">Feedback</a></li>
+        </ul>
+
+        <a class="menu-trigger"><span>Menu</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== Page Heading ===== -->
+  <section class="heading-page header-text">
+    <div class="container">
+      <h6>Student Enrollment</h6>
+      <h2>Student Registration</h2>
+    </div>
+  </section>
+
+  <!-- ===== Student Registration Form ===== -->
+  <section id="student-registration">
+    <h2>Student Registration Form</h2>
+    <p><strong>Organization:</strong> Unique Occassio Tech Pvt. Ltd.</p>
+
+    <!-- Student Details -->
+    <h4>Student Details</h4>
+    <div class="row">
+      <input type="text" placeholder="Full Name *" required>
+
+      <div class="floating-group">
+        <input type="date" id="dob" required>
+        <label for="dob" style="height: 30px; padding-top: 5px;">Date of Birth *</label>
+      </div>
+
+      <input type="number" placeholder="Age">
+      <input type="text" placeholder="Gender">
+    </div>
+
+    <!-- Contact Information -->
+    <h4>Contact Information</h4>
+    <div class="row">
+      <input type="tel" placeholder="Mobile Number *" required>
+      <input type="tel" placeholder="Alternate Number">
+      <input type="email" placeholder="Email ID *" required>
+      <textarea placeholder="Residential Address"></textarea>
+    </div>
+
+    <!-- Educational Qualification -->
+    <h4>Educational Qualification</h4>
+    <div class="row">
+      <input type="text" placeholder="Highest Qualification">
+      <input type="text" placeholder="Institution / University">
+      <input type="text" placeholder="Year of Passing">
+    </div>
+
+    <!-- Course Details -->
+    <h4>Course Details</h4>
+    <div class="row">
+      <div style="position:relative;">
+        <input type="text" id="courseInput" placeholder="Course / Program Name *" autocomplete="off" required>
+        <ul id="courseList" class="suggestions"></ul>
+      </div>
+
+      <input type="text" placeholder="Course Duration">
+
+      <select>
+        <option value="">Mode of Training</option>
+        <option>Classroom</option>
+        <option>Online</option>
+        <option>Hybrid</option>
+      </select>
+    </div>
+
+    <!-- Fee Details -->
+    <h4>Fee Details</h4>
+    <div class="row">
+      <input type="number" placeholder="Total Course Fee">
+      <input type="number" placeholder="Amount Paid">
+      <input type="number" placeholder="Balance Amount">
+
+      <div class="floating-group">
+        <input type="date" id="payment_date" required>
+        <label style="height: 30px; padding-top: 5px;" for="payment_date">Payment Date *</label>
+      </div>
+    </div>
+
+    <!-- Documents -->
+    <h4>Documents Submitted</h4>
+    <div class="checkbox-group">
+      <label><input type="checkbox"> ID Proof</label>
+      <label><input type="checkbox"> Address Proof</label>
+      <label><input type="checkbox"> Educational Certificates</label>
+      <label><input type="checkbox"> Passport Size Photo</label>
+    </div>
+
+    <!-- Declaration -->
+    <h4>Declaration</h4>
+    <label class="declaration">
+      <input type="checkbox" required>
+      I hereby declare that the information provided is true and correct.
+    </label>
+
+    <button type="submit">Submit Registration</button>
+  </section>
+
+  <!-- ===== Scripts ===== -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/stdreg.js"></script>
+
+</body>
+</html>
