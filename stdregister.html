@@ -2,15 +2,15 @@
 <html lang="en">
 
 <head>
+
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Template Mo">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
-  <title>Student Registration | UO Tech</title>
-
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
-
-  <!-- Bootstrap -->
+  <title>Education - Feedback</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -25,12 +25,23 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/stdreg.css">
 
+  <!--
+
+TemplateMo 569 Edu Meeting
+
+https://templatemo.com/tm-569-edu-meeting
+
+-->
+</head>
+
 <body>
+
+
 
   <!-- Sub Header -->
   <div class="sub-header">
     <div class="container">
-      <div class="row" stye="margin-bottom:0px ">
+      <div class="row">
         <div class="col-lg-8 col-sm-8">
           <div class="left-content">
             <p>Innovative Learning. <em>Quality Training. </em>Real Value.</p>
@@ -87,106 +98,259 @@
       </div>
     </div>
   </header>
-  <!-- ===== Page Heading ===== -->
-  <section class="heading-page header-text">
+  <!-- ***** Header Area End ***** -->
+
+
+  <section class="heading-page header-text" id="top">
     <div class="container">
-      <h6>Student Enrollment</h6>
-      <h2>Student Registration</h2>
+      <div class="row">
+        <div class="col-lg-12">
+          <h6>Get all details</h6>
+          <h2>Online & Offline Teaching and Learning Tools</h2>
+        </div>
+      </div>
     </div>
   </section>
 
+
   <!-- ===== Student Registration Form ===== -->
+
   <section id="student-registration">
     <h2>Student Registration Form</h2>
     <p><strong>Organization:</strong> Unique Occassio Tech Pvt. Ltd.</p>
+    <form action="">
+      <!-- Verification Section -->
+      <div id="verification-section">
 
-    <!-- Student Details -->
-    <h4>Student Details</h4>
-    <div class="row">
-      <input type="text" placeholder="Full Name *" required>
+        <h4>Verification</h4>
+        <p>Please enter the 6-digit verification code provided by UO Tech</p>
 
-      <div class="floating-group">
-        <input type="date" id="dob" required>
-        <label for="dob" style="height: 30px; padding-top: 5px;">Date of Birth *</label>
+        <div class="row">
+          <input type="text" id="verificationCode" placeholder="Enter 6-digit Verification Code" maxlength="6"
+            inputmode="numeric" autocomplete="off" required>
+        </div>
+
+        <button type="button" id="verifyBtn">Verify</button>
+
+        <p id="verifyMsg" style="margin-top:10px;font-size:14px;"></p>
+
       </div>
 
-      <input type="number" placeholder="Age">
-      <input type="text" placeholder="Gender">
-    </div>
+      <div id="form-content" style="display:none;">
+        <!-- Student Details -->
+        <h4>Student Details</h4>
+        <div class="row">
+          <input type="text" name="full_name" placeholder="Full Name *" required>
 
-    <!-- Contact Information -->
-    <h4>Contact Information</h4>
-    <div class="row">
-      <input type="tel" placeholder="Mobile Number *" required>
-      <input type="tel" placeholder="Alternate Number">
-      <input type="email" placeholder="Email ID *" required>
-      <textarea placeholder="Residential Address"></textarea>
-    </div>
+          <div class="floating-group">
+            <input type="date" name="dob" id="dob" required>
+            <label for="dob" style="height: 30px; padding-top: 5px;">Date of Birth *</label>
+          </div>
 
-    <!-- Educational Qualification -->
-    <h4>Educational Qualification</h4>
-    <div class="row">
-      <input type="text" placeholder="Highest Qualification">
-      <input type="text" placeholder="Institution / University">
-      <input type="text" placeholder="Year of Passing">
-    </div>
+          <input type="number" name="age" placeholder="Age">
+          <select name="Gender" required>
+            <option value="">Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
 
-    <!-- Course Details -->
-    <h4>Course Details</h4>
-    <div class="row">
-      <div style="position:relative;">
-        <input type="text" id="courseInput" placeholder="Course / Program Name *" autocomplete="off" required>
-        <ul id="courseList" class="suggestions"></ul>
+        <!-- Contact Information -->
+        <h4>Contact Information</h4>
+        <div class="row">
+          <input type="tel" name="mobile_number" placeholder="Mobile Number *" required>
+          <input type="tel" name="alternate_number" placeholder="Alternate Number">
+          <input type="email" name="email_id" placeholder="Email ID *" required>
+          <textarea name="residential_address" placeholder="Residential Address"></textarea>
+        </div>
+
+        <!-- Educational Qualification -->
+        <h4>Educational Qualification</h4>
+        <div class="row">
+          <input type="text" name="highest_qualification" placeholder="Highest Qualification">
+          <input type="text" name="institution_university" placeholder="Institution / University">
+          <input type="text" name="year_of_passing" placeholder="Year of Passing">
+        </div>
+
+        <!-- Course Details -->
+        <h4>Course Details</h4>
+        <div class="row">
+          <div style="position:relative;">
+            <input type="text" id="courseInput" name="course_name" placeholder="Course / Program Name *"
+              autocomplete="off" required>
+            <ul id="courseList" class="suggestions"></ul>
+          </div>
+
+          <input type="text" name="course_duration" placeholder="Course Duration">
+          <select name="training_mode" required>
+            <option value="">Mode of Training</option>
+            <option value="Classroom">Classroom</option>
+            <option value="Online">Online</option>
+            <option value="Hybrid">Hybrid</option>
+          </select>
+
+        </div>
+
+        <!-- Fee Details -->
+        <h4>Fee Details</h4>
+        <div class="row">
+          <input type="number" name="total_course_fee" placeholder="Total Course Fee">
+          <input type="number" name="amount_paid" placeholder="Amount Paid">
+          <input type="number" name="balance_amount" placeholder="Balance Amount">
+
+          <div class="floating-group">
+            <input type="date" name="payment_date" id="payment_date" required>
+            <label style="height: 30px; padding-top: 5px;" for="payment_date">Payment Date *</label>
+          </div>
+        </div>
+
+        <!-- Admission Counsellor Details -->
+        <h4>Admission Counsellor Details</h4>
+
+        <div class="row">
+
+          <!-- BDM Name -->
+          <div style="position:relative;">
+            <input type="text" id="bdmInput" name="bdm_name" placeholder="BDM Name *" autocomplete="off" required>
+            <ul id="bdmList" class="suggestions"></ul>
+          </div>
+
+          <!-- Counsellor Name -->
+          <div style="position:relative;">
+            <input type="text" id="counsellorInput" name="counsellor_name" placeholder="Counsellor Name *"
+              autocomplete="off" required>
+            <ul id="counsellorList" class="suggestions"></ul>
+          </div>
+
+        </div>
+
+
+        <!-- Documents -->
+        <h4>Documents Submitted</h4>
+
+        <div class="checkbox-group">
+
+          <label>
+            <input type="checkbox" name="documents[]" value="ID Proof">
+            ID Proof
+          </label>
+
+          <label>
+            <input type="checkbox" name="documents[]" value="Address Proof">
+            Address Proof
+          </label>
+
+          <label>
+            <input type="checkbox" name="documents[]" value="Educational Certificates">
+            Educational Certificates
+          </label>
+
+          <label>
+            <input type="checkbox" name="documents[]" value="Passport Size Photo">
+            Passport Size Photo
+          </label>
+
+          <!-- Other -->
+          <label class="other-doc">
+            <input type="checkbox" id="otherDocCheck">
+            Other
+          </label>
+
+          <!-- Hidden input -->
+          <input type="text" id="otherDocInput" name="other_document" placeholder="Please specify other document"
+            style="display:none; margin-top:8px;">
+
+        </div>
+
+
+        <!-- Declaration -->
+        <h4>Declaration</h4>
+        <label class="declaration">
+          <input type="checkbox" name="declaration" required>
+          I hereby declare that the information provided is true and correct.
+        </label>
+
+        <button type="submit">Submit Registration</button>
+
+
+        <div class="footer">
+          <p>Copyright © 2026 UO TECH Pvt., Ltd. All Rights Reserved.
+            <br>
+            Design: <a href="https://templatemo.com" target="_parent" title="free css templates">Developer Team</a>
+            <br>
+
+          </p>
+        </div>
       </div>
-
-      <input type="text" placeholder="Course Duration">
-
-      <select>
-        <option value="">Mode of Training</option>
-        <option>Classroom</option>
-        <option>Online</option>
-        <option>Hybrid</option>
-      </select>
-    </div>
-
-    <!-- Fee Details -->
-    <h4>Fee Details</h4>
-    <div class="row">
-      <input type="number" placeholder="Total Course Fee">
-      <input type="number" placeholder="Amount Paid">
-      <input type="number" placeholder="Balance Amount">
-
-      <div class="floating-group">
-        <input type="date" id="payment_date" required>
-        <label style="height: 30px; padding-top: 5px;" for="payment_date">Payment Date *</label>
-      </div>
-    </div>
-
-    <!-- Documents -->
-    <h4>Documents Submitted</h4>
-    <div class="checkbox-group">
-      <label><input type="checkbox"> ID Proof</label>
-      <label><input type="checkbox"> Address Proof</label>
-      <label><input type="checkbox"> Educational Certificates</label>
-      <label><input type="checkbox"> Passport Size Photo</label>
-    </div>
-
-    <!-- Declaration -->
-    <h4>Declaration</h4>
-    <label class="declaration">
-      <input type="checkbox" required>
-      I hereby declare that the information provided is true and correct.
-    </label>
-
-    <button type="submit">Submit Registration</button>
+    </form>
   </section>
 
-  <!-- ===== Scripts ===== -->
+  <!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <script src="assets/js/isotope.min.js"></script>
+  <script src="assets/js/owl-carousel.js"></script>
+  <script src="assets/js/lightbox.js"></script>
+  <script src="assets/js/tabs.js"></script>
+  <script src="assets/js/video.js"></script>
+  <script src="assets/js/slick-slider.js"></script>
+  <script src="assets/js/custom.js"></script>
   <script src="assets/js/stdreg.js"></script>
+  <script src="assets/js/com.js"></script>
+  <script>
+    //according to loftblog tut
+    $('.nav li:first').addClass('active');
+
+    var showSection = function showSection(section, isAnimate) {
+      var
+        direction = section.replace(/#/, ''),
+        reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+        reqSectionPos = reqSection.offset().top - 0;
+
+      if (isAnimate) {
+        $('body, html').animate({
+          scrollTop: reqSectionPos
+        },
+          800);
+      } else {
+        $('body, html').scrollTop(reqSectionPos);
+      }
+
+    };
+
+    var checkSection = function checkSection() {
+      $('.section').each(function () {
+        var
+          $this = $(this),
+          topEdge = $this.offset().top - 80,
+          bottomEdge = topEdge + $this.height(),
+          wScroll = $(window).scrollTop();
+        if (topEdge < wScroll && bottomEdge > wScroll) {
+          var
+            currentId = $this.data('section'),
+            reqLink = $('a').filter('[href*=\\#' + currentId + ']');
+          reqLink.closest('li').addClass('active').
+            siblings().removeClass('active');
+        }
+      });
+    };
+
+    $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
+      e.preventDefault();
+      showSection($(this).attr('href'), true);
+    });
+
+    $(window).scroll(function () {
+      checkSection();
+    });
+  </script>
+
+
+</body>
+
 
 </body>
 

@@ -1,0 +1,32 @@
+<input id="user" placeholder="Staff ID">
+<input id="pass" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+
+<script>
+const WEB_APP_URL =
+  "https://script.google.com/macros/s/AKfycbwZRVMb7cSiJFC_sdDydt8rrYa1cINYmWUe2CH3Zxbv1NCNydd9MNgQNhNNjgryhVbj/exec";
+
+function login() {
+  const user = document.getElementById("user").value.trim();
+  const pass = document.getElementById("pass").value.trim();
+
+  const url =
+    `${WEB_APP_URL}?user=${encodeURIComponent(user)}&pass=${encodeURIComponent(pass)}`;
+
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        sessionStorage.setItem("staff", data.staffUser);
+        alert("Login Success");
+        window.location.href = "generate-id.html";
+      } else {
+        alert("Invalid Staff ID or Password");
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Connection failed");
+    });
+}
+</script>
