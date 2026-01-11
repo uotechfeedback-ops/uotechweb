@@ -1,85 +1,28 @@
-<!-- ===== Student Registration Form ===== -->
-  <section id="student-registration">
-    <h2>Student Registration Form</h2>
-    <p><strong>Organization:</strong> Unique Occassio Tech Pvt. Ltd.</p>
+<!-- ================= STAFF LOGIN ================= -->
+<div class="portal-box" id="loginSection">
+  <h2>Staff Login</h2>
+  <p class="sub">Authorized Staff Only</p>
 
-    <!-- Student Details -->
-    <h4>Student Details</h4>
-    <div class="row">
-      <input type="text" placeholder="Full Name *" required>
+  <input name="staff_user_id" type="text" id="staffUser" placeholder="Staff User ID" required>
+  <input name="password" type="password" id="staffPass" placeholder="Password" required>
 
-      <div class="floating-group">
-        <input type="date" id="dob" required>
-        <label for="dob" style="height: 30px; padding-top: 5px;">Date of Birth *</label>
-      </div>
+  <button onclick="login()">Login</button>
+  <div id="loginMsg" style="margin-top:15px; text-align:center; font-size:14px;"></div>
+</div>
 
-      <input type="number" placeholder="Age">
-      <input type="text" placeholder="Gender">
-    </div>
+<!-- ================= STUDENT ID GENERATION ================= -->
+<div class="portal-box hidden" id="studentSection">
+  <h2>Generate Student ID</h2>
+  <p class="sub">UO Tech Registration</p>
 
-    <!-- Contact Information -->
-    <h4>Contact Information</h4>
-    <div class="row">
-      <input type="tel" placeholder="Mobile Number *" required>
-      <input type="tel" placeholder="Alternate Number">
-      <input type="email" placeholder="Email ID *" required>
-      <textarea placeholder="Residential Address"></textarea>
-    </div>
+  <input name="student_name" type="text" id="studentName" placeholder="Student Name *" required>
+  <input name="student_mobile" type="tel" id="studentMobile" placeholder="Student Mobile Number *" required>
 
-    <!-- Educational Qualification -->
-    <h4>Educational Qualification</h4>
-    <div class="row">
-      <input type="text" placeholder="Highest Qualification">
-      <input type="text" placeholder="Institution / University">
-      <input type="text" placeholder="Year of Passing">
-    </div>
+  <button onclick="generateStudentId()">Generate ID</button>
 
-    <!-- Course Details -->
-    <h4>Course Details</h4>
-    <div class="row">
-      <div style="position:relative;">
-        <input type="text" id="courseInput" placeholder="Course / Program Name *" autocomplete="off" required>
-        <ul id="courseList" class="suggestions"></ul>
-      </div>
+  <div id="result" class="success-box hidden"></div>
 
-      <input type="text" placeholder="Course Duration">
+  <div class="logout" onclick="logout()">Logout</div>
+</div>
 
-      <select>
-        <option value="">Mode of Training</option>
-        <option>Classroom</option>
-        <option>Online</option>
-        <option>Hybrid</option>
-      </select>
-    </div>
-
-    <!-- Fee Details -->
-    <h4>Fee Details</h4>
-    <div class="row">
-      <input type="number" placeholder="Total Course Fee">
-      <input type="number" placeholder="Amount Paid">
-      <input type="number" placeholder="Balance Amount">
-
-      <div class="floating-group">
-        <input type="date" id="payment_date" required>
-        <label style="height: 30px; padding-top: 5px;" for="payment_date">Payment Date *</label>
-      </div>
-    </div>
-
-    <!-- Documents -->
-    <h4>Documents Submitted</h4>
-    <div class="checkbox-group">
-      <label><input type="checkbox"> ID Proof</label>
-      <label><input type="checkbox"> Address Proof</label>
-      <label><input type="checkbox"> Educational Certificates</label>
-      <label><input type="checkbox"> Passport Size Photo</label>
-    </div>
-
-    <!-- Declaration -->
-    <h4>Declaration</h4>
-    <label class="declaration">
-      <input type="checkbox" required>
-      I hereby declare that the information provided is true and correct.
-    </label>
-
-    <button type="submit">Submit Registration</button>
-  </section>
+<script src="assets/js/staffpage.js"></script>

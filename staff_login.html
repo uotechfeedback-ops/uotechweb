@@ -1,32 +1,133 @@
-<input id="user" placeholder="Staff ID">
-<input id="pass" type="password" placeholder="Password">
-<button onclick="login()">Login</button>
+<!DOCTYPE html>
+<html lang="en">
 
-<script>
-const WEB_APP_URL =
-  "https://script.google.com/macros/s/AKfycbwZRVMb7cSiJFC_sdDydt8rrYa1cINYmWUe2CH3Zxbv1NCNydd9MNgQNhNNjgryhVbj/exec";
+<head>
 
-function login() {
-  const user = document.getElementById("user").value.trim();
-  const pass = document.getElementById("pass").value.trim();
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Template Mo">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
-  const url =
-    `${WEB_APP_URL}?user=${encodeURIComponent(user)}&pass=${encodeURIComponent(pass)}`;
+  <title>UOT-Staff Portal</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
 
-  fetch(url)
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        sessionStorage.setItem("staff", data.staffUser);
-        alert("Login Success");
-        window.location.href = "generate-id.html";
-      } else {
-        alert("Invalid Staff ID or Password");
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      alert("Connection failed");
-    });
-}
-</script>
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.3.3/css/intlTelInput.css" />
+
+
+  <!-- Additional CSS Files -->
+  <link rel="stylesheet" href="assets/css/fontawesome.css">
+  <link rel="stylesheet" href="assets/css/templatemo-edu-meeting.css">
+  <link rel="stylesheet" href="assets/css/owl.css">
+  <link rel="stylesheet" href="assets/css/lightbox.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/staffpage.css">
+
+
+</head>
+
+<body>
+
+
+
+
+
+  <!-- ***** Header Area Start ***** -->
+  <header>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+
+            <a href="index.html" class="logo">
+              <img src="assets/images/logo.png" alt="">
+              UO Tech
+            </a>
+
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+
+
+
+  <section class="contact-us" id="contact-us">
+    <div class="container" id="form-content">
+      <div class="row">
+        <div class="col-lg-12 align-self-center">
+          <div class="row">
+            <div class="col-lg-12">
+
+              <!-- ================= STAFF LOGIN ================= -->
+              <div class="portal-box" id="loginSection">
+                <h2>Staff Login</h2>
+                <p class="sub">Authorized Staff Only</p>
+
+                <input name="staff_user_id" type="text" id="staffUser" placeholder="Staff User ID" required>
+                <input name="password" type="password" id="staffPass" placeholder="Password" required>
+
+                <button onclick="login()">Login</button>
+                <div id="loginMsg" style="margin-top:15px; text-align:center; font-size:14px;"></div>
+              </div>
+
+              <!-- ================= STUDENT ID GENERATION ================= -->
+              <div class="portal-box hidden" id="studentSection">
+                <h2>Generate Student ID</h2>
+                <p class="sub">UO Tech Registration</p>
+
+                <input name="student_name" type="text" id="studentName" placeholder="Student Name *" required>
+                <input name="student_mobile" type="tel" id="studentMobile" placeholder="Student Mobile Number *"
+                  required>
+
+                <button onclick="generateStudentId()">Generate ID</button>
+
+                <div id="result" class="success-box hidden"></div>
+
+                <div class="logout" onclick="logout()">Logout</div>
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+    <div class="footer">
+      <p>Copyright © 2026 UO TECH Pvt., Ltd. All Rights Reserved.
+        <br>
+        Design: <a href="https://templatemo.com" target="_parent" title="free css templates">Developer Team</a>
+        <br>
+
+      </p>
+    </div>
+  </section>
+  <!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+
+  <script src="assets/js/isotope.min.js"></script>
+  <script src="assets/js/owl-carousel.js"></script>
+  <script src="assets/js/lightbox.js"></script>
+  <script src="assets/js/tabs.js"></script>
+  <script src="assets/js/video.js"></script>
+  <script src="assets/js/slick-slider.js"></script>
+  <script src="assets/js/custom.js"></script>
+  <script src="assets/js/com.js"></script>
+  <script src="assets/js/staffpage.js"></script>
+
+
+</body>
+
+
+</body>
+
+</html>

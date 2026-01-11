@@ -174,43 +174,49 @@ if (otherCheck && otherInput) {
   });
 }
 
-/* =========================
-   6-DIGIT VERIFICATION
-========================= */
 
-// CHANGE THIS CODE AS REQUIRED
-const VALID_CODE = "123456";
-
+/* Check Student ID Verification */
 const codeInput = document.getElementById("verificationCode");
 const verifyBtn = document.getElementById("verifyBtn");
 const verifySection = document.getElementById("verification-section");
 const formContent = document.getElementById("form-content");
 const verifyMsg = document.getElementById("verifyMsg");
 
-// Allow only numbers
-codeInput.addEventListener("input", function () {
-  this.value = this.value.replace(/\D/g, "");
-});
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbziInm0EodJPHyOAQN2nxRq2QEeflhbpzhWX948RmXSu-9wxC0b4-ewhJJ84iUQlwUX/exec";
 
-verifyBtn.addEventListener("click", function () {
+verifyBtn.addEventListener("click", async function () {
 
-  if (codeInput.value.length !== 6) {
-    verifyMsg.textContent = "Please enter a valid 6-digit code.";
+  const code = codeInput.value.trim();
+
+  if (!code) {
+    verifyMsg.textContent = "Please enter your Student ID";
     verifyMsg.style.color = "red";
     return;
   }
 
-  if (codeInput.value === VALID_CODE) {
+  verifyMsg.textContent = "Verifying...";
+  verifyMsg.style.color = "#555";
 
-    // Hide verification section
-    verifySection.style.display = "none";
+  try {
+    const res = await fetch(
+      `${SCRIPT_URL}?action=verify&code=${encodeURIComponent(code)}`
+    );
 
-    // Show form
-    formContent.style.display = "block";
+    const result = await res.json();
 
-  } else {
-    verifyMsg.textContent = "Invalid verification code ✖";
+    if (result.success) {
+      verifySection.style.display = "none";
+      formContent.style.display = "block";
+    } else {
+      verifyMsg.textContent = "Invalid Student ID ✖";
+      verifyMsg.style.color = "red";
+    }
+
+  } catch (err) {
+    verifyMsg.textContent = "Verification failed. Try again.";
     verifyMsg.style.color = "red";
   }
-
+});
+codeInput.addEventListener("keypress", e => {
+  if (e.key === "Enter") verifyBtn.click();
 });
