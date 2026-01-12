@@ -96,8 +96,6 @@ document.addEventListener("click", (e) => {
 const bdmNames = [
   "Ligi T L",
   "Salu Ajmal",
-  "Haripriya M N",
-  "Gopika Krishna",
 ];
 
 const counsellorNames = [
@@ -109,6 +107,8 @@ const counsellorNames = [
   "Sneha Manoj",
   "Lettisha Stanly",
   "Stebin sajan",
+  "Haripriya M N",
+  "Gopika Krishna",
 ];
 
 // Generic autocomplete function

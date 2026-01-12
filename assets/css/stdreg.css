@@ -174,7 +174,183 @@ button {
 button:hover {
   background: #7e1f22;
 }
+/* ===============================
+   VERIFICATION SECTION
+=============================== */
 
+#verification-section {
+  background: #ffffff;
+  border: 1px solid #eee;
+  padding: 25px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  margin-top: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+#verification-section h4 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #1f272b;
+  text-align: center;
+}
+
+#verification-section p {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+/* Input wrapper */
+#verification-section .row {
+  display: flex;
+  justify-content: center;
+}
+
+/* Verification Input */
+#verificationCode {
+  width: 100%;
+  max-width: 360px;
+  height: 48px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: #f7f7f7;
+  padding: 0 15px;
+  font-size: 14px;
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+}
+
+#verificationCode::placeholder {
+  color: #999;
+  letter-spacing: normal;
+}
+
+#verificationCode:focus {
+  border: 2px solid #000;
+  background: #fff;
+  outline: none;
+}
+
+/* Verify Button */
+#verifyBtn {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 200px;
+  height: 46px;
+  background: #a12c2f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#verifyBtn:hover {
+  background: #7e1f22;
+}
+
+#verifyBtn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Verification Message */
+#verifyMsg {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Success & Error states */
+#verifyMsg.success {
+  color: #1e7e34;
+}
+
+#verifyMsg.error {
+  color: #c82333;
+}
+/* ===============================
+   FORM CONTENT UNIFORM STYLING
+=============================== */
+
+#form-content {
+  margin-top: 25px;
+}
+
+/* Make all fields consistent */
+#form-content input,
+#form-content select,
+#form-content textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 15px;
+  font-size: 14px;
+  border-radius: 6px;
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  color: #555;
+  box-sizing: border-box;
+}
+
+/* Textarea height */
+#form-content textarea {
+  min-height: 120px;
+  padding-top: 12px;
+  resize: none;
+}
+
+/* Focus style */
+#form-content input:focus,
+#form-content select:focus,
+#form-content textarea:focus {
+  border: 2px solid #000;
+  background: #fff;
+  outline: none;
+}
+
+/* Row spacing */
+#form-content .row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px 25px; /* vertical | horizontal */
+  margin-bottom: 30px;
+}
+
+/* Headings spacing */
+#form-content h4 {
+  margin-top: 35px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #1f272b;
+}
+
+/* Checkbox section spacing */
+.checkbox-group {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px 20px;
+}
+
+/* Declaration spacing */
+.declaration {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+/* Submit button spacing */
+#form-content button[type="submit"] {
+  margin-top: 30px;
+  padding: 14px 30px;
+  font-size: 15px;
+}
 /* =========================
    MOBILE RESPONSIVE
 ========================= */
@@ -202,10 +378,31 @@ button:hover {
 
   .checkbox-group label {
     display: flex;
-    margin-bottom: 8px;
+    margin-bottom: -16px;
   }
 
   button {
     width: 100%;
+  }
+  #verification-section {
+    padding: 20px;
+    margin-top: 15px;
+  }
+
+  #verificationCode {
+    max-width: 100%;
+    font-size: 13px;
+  }
+
+  #verifyBtn {
+    max-width: 100%;
+  }
+   #form-content .row {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  #form-content h4 {
+    margin-top: 28px;
   }
 }
