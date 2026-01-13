@@ -27,7 +27,7 @@ const faculties = [
   "Anna Benny",
   "Rahul P R",
   "Tintu Chackochan",
-  "Affreena T Anas",
+  "Afreena Anas",
   "Dona Elizabeth Sabu",
   "Anju Jose",
   "Rahul Gopal",

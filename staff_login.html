@@ -81,9 +81,10 @@
                 <h2>Generate Student ID</h2>
                 <p class="sub">UO Tech Registration</p>
 
-                <input name="student_name" type="text" id="studentName" placeholder="Student Name *" required>
+                <input name="student_name" type="text" id="studentName"  pattern="[A-Za-z\s]+"
+                  placeholder="Student Name *" required>
                 <input name="student_mobile" type="tel" id="studentMobile" placeholder="Student Mobile Number *"
-                  required>
+                  inputmode="numeric" minlength="10" maxlength="15" required>
 
                 <button onclick="generateStudentId()">Generate ID</button>
 
