@@ -120,7 +120,7 @@ https://templatemo.com/tm-569-edu-meeting
   <section id="student-registration">
     <h2>Student Registration Form</h2>
     <p><strong>Organization:</strong> Unique Occassio Tech Pvt. Ltd.</p>
-    <form action="">
+    <form id="form-registration">
       <!-- Verification Section -->
       <div id="verification-section">
 
@@ -128,7 +128,7 @@ https://templatemo.com/tm-569-edu-meeting
         <p>Please enter the verification code provided by UO Tech</p>
 
         <div class="row">
-          <input type="text" id="verificationCode" placeholder="Enter Verification Code (eg: UOT-1234-5678)"
+          <input type="text" name="SPI" id="verificationCode" placeholder="Enter Verification Code (eg: UOT-1234-5678)"
             inputmode="numeric" autocomplete="off" required>
         </div>
 
@@ -143,11 +143,13 @@ https://templatemo.com/tm-569-edu-meeting
         <h4>Student Details</h4>
         <div class="row">
           <input type="text" name="full_name" placeholder="Full Name *" required>
-
+          <input type="text" name="parent_name" placeholder="Parent's Name *" required>
           <div class="floating-group">
             <input type="date" name="dob" id="dob" required>
             <label for="dob" style="height: 30px; padding-top: 5px;">Date of Birth *</label>
           </div>
+
+
 
           <input type="number" name="age" placeholder="Age">
           <select name="Gender" required>
@@ -163,16 +165,17 @@ https://templatemo.com/tm-569-edu-meeting
         <div class="row">
           <input type="tel" name="mobile_number" placeholder="Mobile Number *" required>
           <input type="tel" name="alternate_number" placeholder="Alternate Number">
+          <input type="tel" name="parent_number" placeholder="Parent's Number *" required>
           <input type="email" name="email_id" placeholder="Email ID *" required>
-          <textarea name="residential_address" placeholder="Residential Address"></textarea>
+          <textarea name="residential_address" placeholder="Residential Address" required></textarea>
         </div>
 
         <!-- Educational Qualification -->
         <h4>Educational Qualification</h4>
         <div class="row">
-          <input type="text" name="highest_qualification" placeholder="Highest Qualification">
-          <input type="text" name="institution_university" placeholder="Institution / University">
-          <input type="text" name="year_of_passing" placeholder="Year of Passing">
+          <input type="text" name="highest_qualification" placeholder="Highest Qualification *" required>
+          <input type="text" name="institution_university" placeholder="Institution / University *" required>
+          <input type="text" name="year_of_passing" placeholder="Year of Passing *" required>
         </div>
 
         <!-- Course Details -->
@@ -183,8 +186,15 @@ https://templatemo.com/tm-569-edu-meeting
               autocomplete="off" required>
             <ul id="courseList" class="suggestions"></ul>
           </div>
+          <select name="Admission_Type" required>
+            <option value="">Admission Type*</option>
+            <option value="Corporate Training">Corporate Training</option>
+            <option value="Project">Project</option>
+            <option value="Internship">Internship</option>
+            <option value="Upgrade">Upgrade</option>
+          </select>
 
-          <input type="text" name="course_duration" placeholder="Course Duration">
+          <input type="text" name="course_duration" placeholder="Course Duration *" required>
           <select name="training_mode" required>
             <option value="">Mode of Training</option>
             <option value="Classroom">Classroom</option>
@@ -197,13 +207,13 @@ https://templatemo.com/tm-569-edu-meeting
         <!-- Fee Details -->
         <h4>Fee Details</h4>
         <div class="row">
-          <input type="number" name="total_course_fee" placeholder="Total Course Fee">
-          <input type="number" name="amount_paid" placeholder="Amount Paid">
-          <input type="number" name="balance_amount" placeholder="Balance Amount">
+          <input type="number" id="total_fee" name="total_course_fee" placeholder="Total Course Fee">
+          <input type="number" id="amount_paid" name="amount_paid" placeholder="Amount Paid">
+          <input type="number" id="balance_amount" name="balance_amount" placeholder="Balance Amount" readonly>
 
           <div class="floating-group">
             <input type="date" name="payment_date" id="payment_date" required>
-            <label style="height: 30px; padding-top: 5px;" for="payment_date">Payment Date *</label>
+            <label for="payment_date">Payment Date *</label>
           </div>
         </div>
 
@@ -273,7 +283,7 @@ https://templatemo.com/tm-569-edu-meeting
           I hereby declare that the information provided is true and correct.
         </label>
 
-        <button type="submit">Submit Registration</button>
+       <button id="form-submit" type="submit" class="btn btn-primary">Submit Register</button>
 
 
         <div class="footer">
@@ -348,6 +358,9 @@ https://templatemo.com/tm-569-edu-meeting
     $(window).scroll(function () {
       checkSection();
     });
+
+   
+
   </script>
 
 

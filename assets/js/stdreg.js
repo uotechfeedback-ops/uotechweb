@@ -44,7 +44,7 @@ const courses = [
 
   "Diploma in HRM",
   "PG Diploma in HRM",
-  "Diploma in Hospitality Management"
+  "Diploma in Hospitality Management",
 ];
 
 const courseInput = document.getElementById("courseInput");
@@ -59,7 +59,7 @@ courseInput.addEventListener("input", () => {
     return;
   }
 
-  const matches = courses.filter(course =>
+  const matches = courses.filter((course) =>
     course.toLowerCase().includes(value)
   );
 
@@ -68,7 +68,7 @@ courseInput.addEventListener("input", () => {
     return;
   }
 
-  matches.forEach(course => {
+  matches.forEach((course) => {
     const li = document.createElement("li");
     li.textContent = course;
     li.onclick = () => {
@@ -93,10 +93,7 @@ document.addEventListener("click", (e) => {
 ========================= */
 
 // Example data (replace with your real staff list)
-const bdmNames = [
-  "Ligi T L",
-  "Salu Ajmal",
-];
+const bdmNames = ["Ligi T L", "Salu Ajmal"];
 
 const counsellorNames = [
   "Anusree Uthasan",
@@ -128,8 +125,8 @@ function setupAutocomplete(inputId, listId, data) {
     }
 
     data
-      .filter(item => item.toLowerCase().includes(value))
-      .forEach(item => {
+      .filter((item) => item.toLowerCase().includes(value))
+      .forEach((item) => {
         const li = document.createElement("li");
         li.textContent = item;
         li.onclick = () => {
@@ -154,7 +151,6 @@ function setupAutocomplete(inputId, listId, data) {
 setupAutocomplete("bdmInput", "bdmList", bdmNames);
 setupAutocomplete("counsellorInput", "counsellorList", counsellorNames);
 
-
 /* =========================
    Documents - Other field toggle
 ========================= */
@@ -174,7 +170,6 @@ if (otherCheck && otherInput) {
   });
 }
 
-
 /* Check Student ID Verification */
 const codeInput = document.getElementById("verificationCode");
 const verifyBtn = document.getElementById("verifyBtn");
@@ -182,10 +177,10 @@ const verifySection = document.getElementById("verification-section");
 const formContent = document.getElementById("form-content");
 const verifyMsg = document.getElementById("verifyMsg");
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbziInm0EodJPHyOAQN2nxRq2QEeflhbpzhWX948RmXSu-9wxC0b4-ewhJJ84iUQlwUX/exec";
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbziInm0EodJPHyOAQN2nxRq2QEeflhbpzhWX948RmXSu-9wxC0b4-ewhJJ84iUQlwUX/exec";
 
 verifyBtn.addEventListener("click", async function () {
-
   const code = codeInput.value.trim();
 
   if (!code) {
@@ -211,12 +206,69 @@ verifyBtn.addEventListener("click", async function () {
       verifyMsg.textContent = "Invalid Student ID ✖";
       verifyMsg.style.color = "red";
     }
-
   } catch (err) {
     verifyMsg.textContent = "Verification failed. Try again.";
     verifyMsg.style.color = "red";
   }
 });
-codeInput.addEventListener("keypress", e => {
+codeInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") verifyBtn.click();
+});
+
+const totalFeeInput = document.getElementById("total_fee");
+const amountPaidInput = document.getElementById("amount_paid");
+const balanceInput = document.getElementById("balance_amount");
+
+function calculateBalance() {
+  const totalFeeValue = totalFeeInput.value;
+  const amountPaidValue = amountPaidInput.value;
+
+  // If both fields are empty → show placeholder only
+  if (totalFeeValue === "" && amountPaidValue === "") {
+    balanceInput.value = "";
+    balanceInput.placeholder = "Balance Amount";
+    return;
+  }
+
+  const totalFee = parseFloat(totalFeeValue) || 0;
+  const amountPaid = parseFloat(amountPaidValue) || 0;
+
+  const balance = totalFee - amountPaid;
+
+  balanceInput.value = balance >= 0 ? balance : 0;
+}
+
+totalFeeInput.addEventListener("input", calculateBalance);
+amountPaidInput.addEventListener("input", calculateBalance);
+
+/* ===== ===== */
+/* ===== FORM SUBMISSION ===== */
+/* ===== ===== */
+
+/***********************
+ * FORM SUBMISSION (AJAX)
+ ***********************/
+$("#form-registration").submit((e) => {
+  e.preventDefault();
+    // 🔥 Calculate average
+
+  $("#form-submit").prop("disabled", true).text("Sending...");
+
+  $.ajax({
+    url: "https://script.google.com/macros/s/AKfycbzwBwapXR1p02nvSvJkskCsb2ENrnedWxV7m7uj7w13mGnRt0POwxMjdItNwUY_3R9NnA/exec",
+    data: $("#form-registration").serialize(),
+    method: "POST",
+
+    success: function () {
+      alert("Form submitted successfully");
+      $("#form-submit").prop("disabled", false).text("Submit Register");
+      window.location.reload();
+    },
+
+    error: function (err) {
+      alert("Something went wrong");
+      $("#form-submit").prop("disabled", false).text("Submit Register");
+      console.error(err);
+    }
+  });
 });
