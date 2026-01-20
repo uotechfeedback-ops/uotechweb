@@ -171,14 +171,18 @@ if (otherCheck && otherInput) {
 }
 
 /* Check Student ID Verification */
+
 const codeInput = document.getElementById("verificationCode");
 const verifyBtn = document.getElementById("verifyBtn");
 const verifySection = document.getElementById("verification-section");
 const formContent = document.getElementById("form-content");
 const verifyMsg = document.getElementById("verifyMsg");
+// form fields to auto-fill
+const studentNameInput = document.getElementById("full_name");
+const mobileInput = document.getElementById("mobile_number");
 
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbziInm0EodJPHyOAQN2nxRq2QEeflhbpzhWX948RmXSu-9wxC0b4-ewhJJ84iUQlwUX/exec";
+  "https://script.google.com/macros/s/AKfycbyyy0VUFTMhrhd2LZjZHpFtx8hi5EZdwdKcpVS5aT5wD27mAymG7mjmXHP09y9Tvh6A/exec";
 
 verifyBtn.addEventListener("click", async function () {
   const code = codeInput.value.trim();
@@ -200,6 +204,16 @@ verifyBtn.addEventListener("click", async function () {
     const result = await res.json();
 
     if (result.success) {
+      // Auto-fill fields
+      studentNameInput.value = result.studentName;
+      mobileInput.value = result.mobile;
+       // ✅ RESET FORM
+      
+
+      // Lock auto-filled fields
+      studentNameInput.readOnly = true;
+      mobileInput.readOnly = true;
+      
       verifySection.style.display = "none";
       formContent.style.display = "block";
     } else {
@@ -215,6 +229,10 @@ codeInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") verifyBtn.click();
 });
 
+
+/* ===== ===== */
+/* ===== BALANCE AMOUNT CALCULATION ===== */
+/* ===== ===== */
 const totalFeeInput = document.getElementById("total_fee");
 const amountPaidInput = document.getElementById("amount_paid");
 const balanceInput = document.getElementById("balance_amount");
