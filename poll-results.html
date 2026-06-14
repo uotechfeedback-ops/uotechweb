@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIFA Poll Graphs | UO Tech</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/fontawesome.css">
+  <link rel="stylesheet" href="assets/css/poll.css">
+</head>
+
+<body>
+  <header class="poll-header">
+    <a href="index.html" class="brand">
+      <img src="assets/images/logo.png" alt="UO Tech">
+      <span>UO Tech</span>
+    </a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="meetings.html">Events</a>
+      <a href="stdregister.html">Registration</a>
+      <a href="poll.html">FIFA Poll</a>
+      <a href="poll-results.html" class="active">Poll Graphs</a>
+    </nav>
+  </header>
+
+  <main class="poll-shell results-shell">
+    <section class="poll-hero compact">
+      <div class="hero-copy">
+        <span class="eyebrow">Live Prediction View</span>
+        <h1>FIFA Poll Graphs</h1>
+        <p>Bar graphs for semi-final picks, final picks, winner predictions, and fan teams.</p>
+      </div>
+      <a class="hero-link" href="poll.html">Add Prediction</a>
+    </section>
+
+    <section class="stats-row">
+      <div>
+        <span>Total Entries</span>
+        <strong id="totalEntries">0</strong>
+      </div>
+      <div>
+        <span>Top Winner Pick</span>
+        <strong id="topWinner">No data</strong>
+      </div>
+      <div>
+        <span>Top Fan Team</span>
+        <strong id="topFan">No data</strong>
+      </div>
+    </section>
+
+    <section class="chart-grid">
+      <article class="poll-panel chart-panel">
+        <div class="section-heading">
+          <span>01</span>
+          <div>
+            <h2>Semi-final Picks</h2>
+            <p>All teams selected for semi-final prediction.</p>
+          </div>
+        </div>
+        <div class="bar-chart" id="semiChart"></div>
+      </article>
+
+      <article class="poll-panel chart-panel">
+        <div class="section-heading">
+          <span>02</span>
+          <div>
+            <h2>Final Picks</h2>
+            <p>Teams selected to reach the final match.</p>
+          </div>
+        </div>
+        <div class="bar-chart" id="finalChart"></div>
+      </article>
+
+      <article class="poll-panel chart-panel">
+        <div class="section-heading">
+          <span>03</span>
+          <div>
+            <h2>Winner Picks</h2>
+            <p>Predicted FIFA final winners.</p>
+          </div>
+        </div>
+        <div class="bar-chart" id="winnerChart"></div>
+      </article>
+
+      <article class="poll-panel chart-panel">
+        <div class="section-heading">
+          <span>04</span>
+          <div>
+            <h2>Fan Teams</h2>
+            <p>Teams students support personally.</p>
+          </div>
+        </div>
+        <div class="bar-chart" id="fanChart"></div>
+      </article>
+    </section>
+
+    <p class="data-note" id="dataNote">Showing browser-saved poll data. Connect the Google Sheet endpoint in
+      assets/js/poll.js for live sheet data.</p>
+  </main>
+
+  <script src="assets/js/poll.js"></script>
+</body>
+
+</html>

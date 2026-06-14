@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIFA Prediction Poll | UO Tech</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/fontawesome.css">
+  <link rel="stylesheet" href="assets/css/poll.css">
+</head>
+
+<body>
+  <header class="poll-header">
+    <a href="index.html" class="brand">
+      <img src="assets/images/logo.png" alt="UO Tech">
+      <span>UO Tech</span>
+    </a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="meetings.html">Events</a>
+      <a href="stdregister.html">Registration</a>
+      <a href="poll.html" class="active">FIFA Poll</a>
+      <a href="poll-results.html">Poll Graphs</a>
+    </nav>
+  </header>
+
+  <main class="poll-shell">
+    <section class="poll-hero">
+      <div class="hero-copy">
+        <span class="eyebrow">Campus Football Night</span>
+        <h1>FIFA Final Prediction Poll</h1>
+        <p>Pick your semi-final four, your final two, the champion, and the team you support.</p>
+      </div>
+      <div class="hero-score">
+        <span>Prediction Card</span>
+        <strong>4-2-1</strong>
+        <small>Semi-finalists - Finalists - Winner</small>
+      </div>
+    </section>
+
+    <form id="predictionForm" class="prediction-form">
+      <section class="poll-panel">
+        <div class="section-heading">
+          <span>01</span>
+          <div>
+            <h2>Student Details</h2>
+            <p>Enter the participant information before making predictions.</p>
+          </div>
+        </div>
+
+        <div class="field-grid">
+          <label>
+            Student Name
+            <input type="text" id="studentName" name="student_name" placeholder="Enter student name" required>
+          </label>
+          <label>
+            Mobile Number
+            <input type="tel" id="mobileNumber" name="mobile_number" placeholder="10 digit mobile number" minlength="10"
+              maxlength="10" required>
+          </label>
+        </div>
+      </section>
+
+      <section class="poll-panel">
+        <div class="section-heading">
+          <span>02</span>
+          <div>
+            <h2>Semi-final Teams</h2>
+            <p>Select exactly 4 teams you think will reach the semi-final.</p>
+          </div>
+        </div>
+        <div class="limit-row">
+          <strong id="semiCount">0/4 selected</strong>
+        </div>
+        <div class="team-grid" id="semiGrid"></div>
+      </section>
+
+      <section class="poll-panel">
+        <div class="section-heading">
+          <span>03</span>
+          <div>
+            <h2>Final Teams</h2>
+            <p>Select exactly 2 teams from your semi-final list.</p>
+          </div>
+        </div>
+        <div class="limit-row">
+          <strong id="finalCount">0/2 selected</strong>
+        </div>
+        <div class="team-grid" id="finalGrid"></div>
+      </section>
+
+      <section class="poll-panel">
+        <div class="section-heading">
+          <span>04</span>
+          <div>
+            <h2>FIFA Final Winner</h2>
+            <p>Pick 1 champion from your final teams.</p>
+          </div>
+        </div>
+        <div class="limit-row">
+          <strong id="winnerCount">0/1 selected</strong>
+        </div>
+        <div class="team-grid" id="winnerGrid"></div>
+      </section>
+
+      <section class="poll-panel">
+        <div class="section-heading">
+          <span>05</span>
+          <div>
+            <h2>Fan Team</h2>
+            <p>Select the team you personally support.</p>
+          </div>
+        </div>
+        <div class="limit-row">
+          <strong id="fanCount">0/1 selected</strong>
+        </div>
+        <div class="team-grid" id="fanGrid"></div>
+      </section>
+
+      <input type="hidden" name="semi_final_teams" id="semiFinalTeams">
+      <input type="hidden" name="final_teams" id="finalTeams">
+      <input type="hidden" name="winner_team" id="winnerTeam">
+      <input type="hidden" name="fan_team" id="fanTeam">
+
+      <div class="submit-bar">
+        <p id="formMessage" aria-live="polite"></p>
+        <button type="submit" id="submitPoll">
+          <i class="fa fa-paper-plane"></i>
+          Submit Prediction
+        </button>
+      </div>
+    </form>
+  </main>
+
+  <script src="assets/js/poll.js"></script>
+</body>
+
+</html>
