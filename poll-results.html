@@ -13,13 +13,14 @@
 
 <body>
   <header class="poll-header">
-        <nav>
     <a href="index.html" class="brand">
       <img src="assets/images/logo.png" alt="UO Tech">
       <span>UO Tech</span>
     </a>
-
+    <nav>
       <a href="index.html">Home</a>
+      <a href="meetings.html">Events</a>
+      <a href="stdregister.html">Registration</a>
       <a href="poll.html">FIFA Poll</a>
       <a href="poll-results.html" class="active">Poll Graphs</a>
     </nav>
@@ -59,6 +60,10 @@
             <p>All teams selected for semi-final prediction.</p>
           </div>
         </div>
+        <label class="team-search chart-search">
+          Search team
+          <input type="search" data-chart-search="semiChart" placeholder="Search semi-final graph">
+        </label>
         <div class="bar-chart" id="semiChart"></div>
       </article>
 
@@ -70,6 +75,10 @@
             <p>Teams selected to reach the final match.</p>
           </div>
         </div>
+        <label class="team-search chart-search">
+          Search team
+          <input type="search" data-chart-search="finalChart" placeholder="Search final graph">
+        </label>
         <div class="bar-chart" id="finalChart"></div>
       </article>
 
@@ -81,6 +90,10 @@
             <p>Predicted FIFA final winners.</p>
           </div>
         </div>
+        <label class="team-search chart-search">
+          Search team
+          <input type="search" data-chart-search="winnerChart" placeholder="Search winner graph">
+        </label>
         <div class="bar-chart" id="winnerChart"></div>
       </article>
 
@@ -92,10 +105,15 @@
             <p>Teams students support personally.</p>
           </div>
         </div>
+        <label class="team-search chart-search">
+          Search team
+          <input type="search" data-chart-search="fanChart" placeholder="Search fan graph">
+        </label>
         <div class="bar-chart" id="fanChart"></div>
       </article>
     </section>
 
+    <p class="data-note" id="dataNote">Loading live poll data...</p>
   </main>
 
   <script src="assets/js/poll.js"></script>

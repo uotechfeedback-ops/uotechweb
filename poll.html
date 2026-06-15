@@ -13,12 +13,12 @@
 
 <body>
   <header class="poll-header">
-     <nav>
+    <nav>
     <a href="index.html" class="brand">
       <img src="assets/images/logo.png" alt="UO Tech">
       <span>UO Tech</span>
     </a>
-   
+    
       <a href="index.html">Home</a>
       <a href="poll.html" class="active">FIFA Poll</a>
       <a href="poll-results.html">Poll Graphs</a>
@@ -73,6 +73,10 @@
         <div class="limit-row">
           <strong id="semiCount">0/4 selected</strong>
         </div>
+        <label class="team-search">
+          Search team
+          <input type="search" id="semiSearch" data-search-type="semi" placeholder="Search semi-final teams">
+        </label>
         <div class="team-grid" id="semiGrid"></div>
       </section>
 
@@ -87,6 +91,10 @@
         <div class="limit-row">
           <strong id="finalCount">0/2 selected</strong>
         </div>
+        <label class="team-search">
+          Search team
+          <input type="search" id="finalSearch" data-search-type="final" placeholder="Search final teams">
+        </label>
         <div class="team-grid" id="finalGrid"></div>
       </section>
 
@@ -101,6 +109,10 @@
         <div class="limit-row">
           <strong id="winnerCount">0/1 selected</strong>
         </div>
+        <label class="team-search">
+          Search team
+          <input type="search" id="winnerSearch" data-search-type="winner" placeholder="Search winner teams">
+        </label>
         <div class="team-grid" id="winnerGrid"></div>
       </section>
 
@@ -115,6 +127,10 @@
         <div class="limit-row">
           <strong id="fanCount">0/1 selected</strong>
         </div>
+        <label class="team-search">
+          Search team
+          <input type="search" id="fanSearch" data-search-type="fan" placeholder="Search fan teams">
+        </label>
         <div class="team-grid" id="fanGrid"></div>
       </section>
 
