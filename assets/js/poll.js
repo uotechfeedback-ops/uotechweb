@@ -1,5 +1,6 @@
 const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxL3i2RthG2fHMAzf9IjEp_gf9SltFPcAG1I-OpjotXiQ_XEas-XmAIgmps3fKWlkfI/exec";
 const STORAGE_KEY = "uotech_fifa_poll_entries";
+const LIVE_REFRESH_MS = 6000;
 
 const teams = [
   { name: "Argentina", code: "ARG", region: "South America", gradient: "linear-gradient(145deg, rgba(117, 190, 255, .56), rgba(255, 255, 255, .08))" },
@@ -34,6 +35,17 @@ const limits = {
   fan: 1
 };
 
+const searchState = {
+  semi: "",
+  final: "",
+  winner: "",
+  fan: ""
+};
+
+const chartSearchState = {};
+let liveRefreshTimer = null;
+let lastResultsSignature = "";
+
 document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("predictionForm")) {
     initPollForm();
@@ -47,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function initPollForm() {
   renderAllGrids();
   bindInputs();
+  bindTeamSearch();
 
   document.getElementById("predictionForm").addEventListener("submit", submitPoll);
 }
@@ -78,7 +91,20 @@ function renderGrid(type, gridId) {
 
   grid.innerHTML = "";
 
-  teams.forEach((team) => {
+  const query = searchState[type].trim().toLowerCase();
+  const visibleTeams = teams.filter((team) => {
+    return !query
+      || team.name.toLowerCase().includes(query)
+      || team.code.toLowerCase().includes(query)
+      || team.region.toLowerCase().includes(query);
+  });
+
+  if (!visibleTeams.length) {
+    grid.innerHTML = `<p class="empty-state">No matching teams found.</p>`;
+    return;
+  }
+
+  visibleTeams.forEach((team) => {
     const card = document.createElement("button");
     const isSelected = selection[type].includes(team.name);
     const disabled = isTeamDisabled(type, team.name);
@@ -99,6 +125,15 @@ function renderGrid(type, gridId) {
 
     card.addEventListener("click", () => handleTeamClick(type, team.name));
     grid.appendChild(card);
+  });
+}
+
+function bindTeamSearch() {
+  document.querySelectorAll("[data-search-type]").forEach((input) => {
+    input.addEventListener("input", () => {
+      searchState[input.dataset.searchType] = input.value;
+      renderAllGrids();
+    });
   });
 }
 
@@ -195,6 +230,7 @@ async function submitPoll(event) {
     }
 
     saveEntry(entry);
+    notifyPollChanged();
     showMessage("Prediction submitted successfully.", false, true);
     setTimeout(() => {
       window.location.href = "poll-results.html";
@@ -245,9 +281,16 @@ function isFormValid() {
 }
 
 function initResultsPage() {
-  loadEntries().then((entries) => {
-    renderResults(entries);
+  bindChartSearch();
+  refreshResults(true);
+
+  liveRefreshTimer = window.setInterval(() => refreshResults(false), LIVE_REFRESH_MS);
+
+  window.addEventListener("storage", (event) => {
+    if (event.key === STORAGE_KEY) refreshResults(true);
   });
+
+  window.addEventListener("uotechPollChanged", () => refreshResults(true));
 }
 
 async function loadEntries() {
@@ -259,7 +302,8 @@ async function loadEntries() {
 
   try {
     const sheetEntries = await loadSheetJsonp(GOOGLE_SHEET_WEB_APP_URL);
-    return Array.isArray(sheetEntries) ? sheetEntries : localEntries;
+    const rows = extractRows(sheetEntries);
+    return rows.length ? mergeEntries(localEntries, rows) : localEntries;
   } catch (error) {
     console.error(error);
     return localEntries;
@@ -289,9 +333,19 @@ function loadSheetJsonp(url) {
   });
 }
 
-function renderResults(entries) {
-  const normalized = entries.map(normalizeEntry);
+async function refreshResults(forceRender = false) {
+  const entries = await loadEntries();
+  const normalized = entries.map(normalizeEntry).filter(hasPollData);
+  const signature = JSON.stringify(normalized);
 
+  if (!forceRender && signature === lastResultsSignature) return;
+
+  lastResultsSignature = signature;
+  renderResults(normalized);
+  updateDataNote(normalized.length);
+}
+
+function renderResults(normalized) {
   const semiCounts = countList(normalized.flatMap((entry) => entry.semi_final_teams));
   const finalCounts = countList(normalized.flatMap((entry) => entry.final_teams));
   const winnerCounts = countList(normalized.map((entry) => entry.winner_team).filter(Boolean));
@@ -311,11 +365,14 @@ function renderChart(id, counts) {
   const chart = document.getElementById(id);
   if (!chart) return;
 
-  const rows = Object.entries(counts).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  const query = (chartSearchState[id] || "").trim().toLowerCase();
+  const rows = Object.entries(counts)
+    .filter(([team]) => !query || team.toLowerCase().includes(query))
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
   const max = Math.max(1, ...rows.map((row) => row[1]));
 
   if (!rows.length) {
-    chart.innerHTML = `<p class="empty-state">No poll data available yet.</p>`;
+    chart.innerHTML = `<p class="empty-state">${query ? "No matching teams found." : "No poll data available yet."}</p>`;
     return;
   }
 
@@ -323,12 +380,22 @@ function renderChart(id, counts) {
     const width = Math.max(6, Math.round((value / max) * 100));
     return `
       <div class="bar-row">
-        <span class="bar-label">${team}</span>
+        <span class="bar-label">${escapeHtml(team)}</span>
         <span class="bar-track"><span class="bar-fill" style="width:${width}%"></span></span>
         <span class="bar-value">${value}</span>
       </div>
     `;
   }).join("");
+}
+
+function bindChartSearch() {
+  document.querySelectorAll("[data-chart-search]").forEach((input) => {
+    chartSearchState[input.dataset.chartSearch] = "";
+    input.addEventListener("input", () => {
+      chartSearchState[input.dataset.chartSearch] = input.value;
+      refreshResults(true);
+    });
+  });
 }
 
 function saveEntry(entry) {
@@ -346,23 +413,41 @@ function getSavedEntries() {
 }
 
 function normalizeEntry(entry) {
+  const row = normalizeKeys(entry || {});
+
   return {
-    semi_final_teams: toArray(entry.semi_final_teams),
-    final_teams: toArray(entry.final_teams),
-    winner_team: Array.isArray(entry.winner_team) ? entry.winner_team[0] : entry.winner_team,
-    fan_team: Array.isArray(entry.fan_team) ? entry.fan_team[0] : entry.fan_team
+    timestamp: pickValue(row, ["timestamp", "time", "date"]),
+    student_name: pickValue(row, ["student_name", "studentname", "name"]),
+    mobile_number: pickValue(row, ["mobile_number", "mobilenumber", "mobile", "phone"]),
+    semi_final_teams: toArray(pickValue(row, ["semi_final_teams", "semifinalteams", "semi_final", "semifinal", "semi"])),
+    final_teams: toArray(pickValue(row, ["final_teams", "finalteams", "final"])),
+    winner_team: firstValue(pickValue(row, ["winner_team", "winnerteam", "winner", "champion"])),
+    fan_team: firstValue(pickValue(row, ["fan_team", "fanteam", "fan", "support_team", "supportteam"]))
   };
 }
 
 function toArray(value) {
-  if (Array.isArray(value)) return value;
+  if (Array.isArray(value)) return value.map(cleanTeamName).filter(Boolean);
   if (!value) return [];
-  return String(value).split(",").map((item) => item.trim()).filter(Boolean);
+
+  const text = String(value).trim();
+  if (!text) return [];
+
+  try {
+    const parsed = JSON.parse(text);
+    if (Array.isArray(parsed)) return parsed.map(cleanTeamName).filter(Boolean);
+  } catch (error) {
+    // Sheet data may be plain comma text, so JSON parsing is only a convenience.
+  }
+
+  return text.split(/[,;|]/).map(cleanTeamName).filter(Boolean);
 }
 
 function countList(list) {
   return list.reduce((acc, item) => {
-    acc[item] = (acc[item] || 0) + 1;
+    const key = cleanTeamName(item);
+    if (!key) return acc;
+    acc[key] = (acc[key] || 0) + 1;
     return acc;
   }, {});
 }
@@ -389,4 +474,108 @@ function setText(id, text) {
 function setValue(id, value) {
   const element = document.getElementById(id);
   if (element) element.value = value;
+}
+
+function extractRows(data) {
+  if (Array.isArray(data)) return data;
+  if (!data || typeof data !== "object") return [];
+
+  if (Array.isArray(data.data)) return data.data;
+  if (Array.isArray(data.rows)) return data.rows;
+  if (Array.isArray(data.entries)) return data.entries;
+  if (Array.isArray(data.values)) return sheetValuesToObjects(data.values);
+
+  return [];
+}
+
+function sheetValuesToObjects(values) {
+  if (!Array.isArray(values) || values.length < 2) return [];
+
+  const headers = values[0].map((header) => String(header || ""));
+  return values.slice(1).map((row) => {
+    return headers.reduce((entry, header, index) => {
+      entry[header] = row[index];
+      return entry;
+    }, {});
+  });
+}
+
+function normalizeKeys(entry) {
+  return Object.entries(entry).reduce((acc, [key, value]) => {
+    const normalizedKey = String(key).toLowerCase().replace(/[^a-z0-9]/g, "");
+    acc[normalizedKey] = value;
+    return acc;
+  }, {});
+}
+
+function pickValue(entry, keys) {
+  for (const key of keys) {
+    const normalizedKey = key.toLowerCase().replace(/[^a-z0-9]/g, "");
+    if (entry[normalizedKey] !== undefined && entry[normalizedKey] !== "") {
+      return entry[normalizedKey];
+    }
+  }
+
+  return "";
+}
+
+function firstValue(value) {
+  return cleanTeamName(Array.isArray(value) ? value[0] : value);
+}
+
+function hasPollData(entry) {
+  return entry.semi_final_teams.length
+    || entry.final_teams.length
+    || entry.winner_team
+    || entry.fan_team;
+}
+
+function cleanTeamName(value) {
+  return String(value || "")
+    .trim()
+    .replace(/^["'\[\]]+|["'\[\]]+$/g, "")
+    .replace(/\s+/g, " ");
+}
+
+function mergeEntries(localEntries, sheetEntries) {
+  const merged = [];
+  const seen = new Set();
+
+  [...sheetEntries, ...localEntries].forEach((entry) => {
+    const normalized = normalizeEntry(entry);
+    const signature = [
+      normalized.timestamp,
+      normalized.student_name,
+      normalized.mobile_number,
+      normalized.semi_final_teams.join("|"),
+      normalized.final_teams.join("|"),
+      normalized.winner_team,
+      normalized.fan_team
+    ].join("::");
+
+    if (!seen.has(signature)) {
+      seen.add(signature);
+      merged.push(entry);
+    }
+  });
+
+  return merged;
+}
+
+function updateDataNote(count) {
+  const source = GOOGLE_SHEET_WEB_APP_URL ? "Google Sheet and browser-saved poll data" : "browser-saved poll data";
+  setText("dataNote", `Showing ${count} live entr${count === 1 ? "y" : "ies"} from ${source}. Auto-refreshing every ${LIVE_REFRESH_MS / 1000} seconds.`);
+}
+
+function notifyPollChanged() {
+  window.dispatchEvent(new CustomEvent("uotechPollChanged"));
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
