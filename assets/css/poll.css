@@ -28,6 +28,7 @@ body {
   background-attachment: fixed;
   background-size: cover;
   letter-spacing: 0;
+  overflow-x: hidden;
 }
 
 body::before {
@@ -78,6 +79,7 @@ body::before {
   justify-content: flex-end;
   gap: 8px;
   flex-wrap: wrap;
+  min-width: 0;
 }
 
 .poll-header nav a,
@@ -277,6 +279,20 @@ input:focus {
   box-shadow: 0 0 0 4px rgba(248, 200, 70, 0.13);
 }
 
+.team-search {
+  max-width: 360px;
+  margin: -6px 0 18px;
+  font-size: 13px;
+}
+
+.team-search input {
+  min-height: 46px;
+}
+
+.chart-search {
+  margin-top: -8px;
+}
+
 .limit-row {
   display: flex;
   justify-content: flex-end;
@@ -310,6 +326,7 @@ input:focus {
     var(--team-gradient);
   overflow: hidden;
   transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+  touch-action: manipulation;
 }
 
 .team-card::before {
@@ -452,40 +469,68 @@ button:disabled {
 
 .bar-chart {
   display: grid;
-  gap: 12px;
+  gap: 14px;
 }
 
 .bar-row {
   display: grid;
-  grid-template-columns: 112px minmax(0, 1fr) 42px;
+  grid-template-columns: 124px minmax(0, 1fr) 52px;
   align-items: center;
   gap: 12px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.035));
 }
 
 .bar-label {
   font-weight: 800;
   color: #e9fff0;
+  overflow-wrap: anywhere;
 }
 
 .bar-track {
-  height: 22px;
+  position: relative;
+  height: 30px;
   overflow: hidden;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03)),
+    rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 8px rgba(0, 0, 0, 0.28);
 }
 
 .bar-fill {
+  position: relative;
+  display: block;
   height: 100%;
   min-width: 0;
   border-radius: inherit;
-  background: linear-gradient(90deg, var(--grass), var(--gold));
-  transition: width 300ms ease;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent 42%),
+    linear-gradient(90deg, var(--grass), var(--lime), var(--gold));
+  box-shadow: 0 0 22px rgba(185, 243, 70, 0.25);
+  transition: width 450ms ease;
+}
+
+.bar-fill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.24), transparent);
+  transform: translateX(-100%);
+  animation: bar-shine 2.8s ease-in-out infinite;
 }
 
 .bar-value {
   color: var(--gold);
   font-weight: 900;
   text-align: right;
+}
+
+.empty-state {
+  margin: 0;
 }
 
 .empty-state,
@@ -499,14 +544,29 @@ button:disabled {
   text-align: center;
 }
 
+@keyframes bar-shine {
+  0%, 45% {
+    transform: translateX(-100%);
+  }
+  80%, 100% {
+    transform: translateX(100%);
+  }
+}
+
 @media (max-width: 860px) {
+  body {
+    background-attachment: scroll;
+  }
+
   .poll-header {
     align-items: flex-start;
     flex-direction: column;
+    gap: 12px;
   }
 
   .poll-header nav {
     justify-content: flex-start;
+    width: 100%;
   }
 
   .poll-hero,
@@ -521,6 +581,10 @@ button:disabled {
     min-height: auto;
   }
 
+  .hero-score strong {
+    font-size: 56px;
+  }
+
   .submit-bar {
     align-items: stretch;
     flex-direction: column;
@@ -530,23 +594,238 @@ button:disabled {
 @media (max-width: 520px) {
   .poll-shell {
     width: min(100% - 18px, 1180px);
-    padding-top: 18px;
+    padding: 16px 0 92px;
+  }
+
+  .poll-header {
+    padding: 10px 9px;
+  }
+
+  .poll-header nav {
+    gap: 6px;
+  }
+
+  .poll-header .brand {
+    flex: 1 0 100%;
+    margin-bottom: 2px;
+  }
+
+  .brand img {
+    width: 34px;
+    height: 34px;
   }
 
   .poll-header nav a {
-    padding: 8px 10px;
+    min-height: 38px;
+    padding: 8px 9px;
+    font-size: 12px;
+  }
+
+  .poll-hero,
+  .poll-hero.compact {
+    min-height: auto;
+    gap: 18px;
+    padding: 22px 16px;
+    margin-bottom: 16px;
+  }
+
+  .poll-hero::after {
+    right: -150px;
+    bottom: -170px;
+    width: 320px;
+    height: 320px;
+  }
+
+  .eyebrow {
+    margin-bottom: 10px;
+    font-size: 11px;
+  }
+
+  .hero-copy h1 {
+    margin-bottom: 12px;
+    font-size: 34px;
+    line-height: 1.04;
+  }
+
+  .hero-copy p {
+    font-size: 15px;
+  }
+
+  .hero-score {
+    padding: 16px;
+  }
+
+  .hero-score strong {
+    font-size: 44px;
+  }
+
+  .hero-link {
+    width: 100%;
+    text-align: center;
+  }
+
+  .prediction-form,
+  .chart-grid {
+    gap: 16px;
+  }
+
+  .poll-panel {
+    padding: 16px;
+  }
+
+  .section-heading {
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .section-heading > span {
+    flex-basis: 34px;
+    width: 34px;
+    height: 34px;
+    font-size: 11px;
+  }
+
+  .section-heading h2 {
+    font-size: 22px;
+  }
+
+  .section-heading p {
+    font-size: 13px;
+  }
+
+  .field-grid {
+    gap: 14px;
+  }
+
+  input {
+    min-height: 48px;
+    padding: 0 13px;
+    font-size: 15px;
+  }
+
+  .team-search {
+    max-width: none;
+    margin: -2px 0 14px;
+  }
+
+  .limit-row {
+    justify-content: flex-start;
+    margin: -4px 0 12px;
   }
 
   .team-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
   }
 
   .team-card {
-    min-height: 142px;
+    min-height: 126px;
+    padding: 12px 8px;
+  }
+
+  .team-card:hover {
+    transform: none;
+  }
+
+  .team-card::before {
+    inset: 7px;
+  }
+
+  .crest {
+    width: 50px;
+    height: 59px;
+    margin-bottom: 9px;
+    font-size: 19px;
+  }
+
+  .team-name {
+    font-size: 14px;
+  }
+
+  .team-region {
+    font-size: 11px;
+  }
+
+  .submit-bar {
+    left: 9px;
+    right: 9px;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  #formMessage {
+    font-size: 13px;
+  }
+
+  button {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 16px;
+  }
+
+  .stats-row {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .stats-row > div {
+    padding: 15px;
+  }
+
+  .stats-row span {
+    margin-bottom: 5px;
+    font-size: 12px;
+  }
+
+  .stats-row strong {
+    font-size: 25px;
+  }
+
+  .chart-panel {
+    min-height: auto;
   }
 
   .bar-row {
-    grid-template-columns: 88px minmax(0, 1fr) 34px;
+    grid-template-columns: minmax(0, 1fr) 38px;
     gap: 8px;
+    padding: 8px;
+  }
+
+  .bar-label {
+    grid-column: 1 / -1;
+    font-size: 13px;
+  }
+
+  .bar-track {
+    height: 24px;
+  }
+
+  .bar-value {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 360px) {
+  .poll-header nav a {
+    font-size: 11px;
+    padding-inline: 7px;
+  }
+
+  .hero-copy h1 {
+    font-size: 30px;
+  }
+
+  .team-grid {
+    gap: 8px;
+  }
+
+  .team-card {
+    min-height: 118px;
+  }
+
+  .crest {
+    width: 44px;
+    height: 52px;
+    font-size: 17px;
   }
 }
