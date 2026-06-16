@@ -353,7 +353,7 @@ async function refreshResults(forceRender = false) {
 
   lastResultsSignature = signature;
   renderResults(normalized);
-  updateDataNote(normalized.length);
+
 }
 
 function renderResults(normalized) {
@@ -481,7 +481,7 @@ function drawPieChart(canvas, rows) {
   const total = rows.reduce((sum, row) => sum + row[1], 0);
   const colors = ["#f8c846", "#14b86a", "#4fc3f7", "#ff7369", "#b9f346", "#b388ff", "#ff9f43", "#60e6c5"];
   const radius = Math.min(width, height) * 0.31;
-  const cx = width * 0.34;
+  const cx = width * 0.35;
   const cy = height * 0.48;
   let start = -Math.PI / 2;
 
