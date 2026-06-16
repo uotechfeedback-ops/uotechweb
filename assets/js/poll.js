@@ -45,6 +45,7 @@ const searchState = {
 const chartSearchState = {};
 let liveRefreshTimer = null;
 let lastResultsSignature = "";
+let chartResizeTimer = null;
 
 document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("predictionForm")) {
@@ -229,7 +230,11 @@ async function submitPoll(event) {
       });
     }
 
-    saveEntry(entry);
+    if (GOOGLE_SHEET_WEB_APP_URL) {
+      clearSavedEntries();
+    } else {
+      saveEntry(entry);
+    }
     notifyPollChanged();
     showMessage("Prediction submitted successfully.", false, true);
     setTimeout(() => {
@@ -286,6 +291,11 @@ function initResultsPage() {
 
   liveRefreshTimer = window.setInterval(() => refreshResults(false), LIVE_REFRESH_MS);
 
+  window.addEventListener("resize", () => {
+    window.clearTimeout(chartResizeTimer);
+    chartResizeTimer = window.setTimeout(() => renderResultsFromCurrentData(), 160);
+  });
+
   window.addEventListener("storage", (event) => {
     if (event.key === STORAGE_KEY) refreshResults(true);
   });
@@ -303,7 +313,8 @@ async function loadEntries() {
   try {
     const sheetEntries = await loadSheetJsonp(GOOGLE_SHEET_WEB_APP_URL);
     const rows = extractRows(sheetEntries);
-    return rows.length ? mergeEntries(localEntries, rows) : localEntries;
+    clearSavedEntries();
+    return rows;
   } catch (error) {
     console.error(error);
     return localEntries;
@@ -346,6 +357,7 @@ async function refreshResults(forceRender = false) {
 }
 
 function renderResults(normalized) {
+  window.currentPollResults = normalized;
   const semiCounts = countList(normalized.flatMap((entry) => entry.semi_final_teams));
   const finalCounts = countList(normalized.flatMap((entry) => entry.final_teams));
   const winnerCounts = countList(normalized.map((entry) => entry.winner_team).filter(Boolean));
@@ -376,7 +388,18 @@ function renderChart(id, counts) {
     return;
   }
 
-  chart.innerHTML = rows.map(([team, value]) => {
+  chart.innerHTML = `
+    <div class="chart-canvases">
+      <canvas class="poll-canvas bar-canvas" aria-label="Bar chart"></canvas>
+      <canvas class="poll-canvas pie-canvas" aria-label="Pie chart"></canvas>
+    </div>
+    <div class="chart-table" aria-label="Poll result values"></div>
+  `;
+
+  drawBarChart(chart.querySelector(".bar-canvas"), rows);
+  drawPieChart(chart.querySelector(".pie-canvas"), rows);
+
+  chart.querySelector(".chart-table").innerHTML = rows.map(([team, value]) => {
     const width = Math.max(6, Math.round((value / max) * 100));
     return `
       <div class="bar-row">
@@ -386,6 +409,165 @@ function renderChart(id, counts) {
       </div>
     `;
   }).join("");
+}
+
+function renderResultsFromCurrentData() {
+  if (Array.isArray(window.currentPollResults)) {
+    renderResults(window.currentPollResults);
+  }
+}
+
+function drawBarChart(canvas, rows) {
+  const ctx = prepareCanvas(canvas, 560, 300);
+  if (!ctx) return;
+
+  const width = canvas.renderWidth || canvas.width;
+  const height = canvas.renderHeight || canvas.height;
+  const padding = { top: 24, right: 22, bottom: 58, left: 60 };
+  const chartWidth = width - padding.left - padding.right;
+  const chartHeight = height - padding.top - padding.bottom;
+  const max = Math.max(1, ...rows.map((row) => row[1]));
+  const barGap = rows.length > 8 ? 7 : 10;
+  const barWidth = Math.max(14, (chartWidth - barGap * (rows.length - 1)) / rows.length);
+
+  ctx.clearRect(0, 0, width, height);
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.16)";
+  ctx.lineWidth = 1;
+
+  for (let i = 0; i <= 4; i += 1) {
+    const y = padding.top + chartHeight - (chartHeight * i / 4);
+    ctx.beginPath();
+    ctx.moveTo(padding.left, y);
+    ctx.lineTo(width - padding.right, y);
+    ctx.stroke();
+  }
+
+  rows.forEach(([team, value], index) => {
+    const x = padding.left + index * (barWidth + barGap);
+    const barHeight = Math.max(5, (value / max) * chartHeight);
+    const y = padding.top + chartHeight - barHeight;
+    const gradient = ctx.createLinearGradient(0, y, 0, padding.top + chartHeight);
+
+    gradient.addColorStop(0, "#f8c846");
+    gradient.addColorStop(0.52, "#b9f346");
+    gradient.addColorStop(1, "#14b86a");
+
+    ctx.fillStyle = gradient;
+    roundRect(ctx, x, y, barWidth, barHeight, 8);
+    ctx.fill();
+
+    ctx.fillStyle = "#f8c846";
+    ctx.font = "700 16px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(value, x + barWidth / 2, y - 8);
+
+    ctx.save();
+    ctx.translate(x + barWidth / 2, height - 45);
+    ctx.rotate(-Math.PI / 5);
+    ctx.fillStyle = "#dce9e2";
+    ctx.font = "700 13px Arial";
+    ctx.textAlign = "right";
+    ctx.fillText(fitCanvasText(ctx, team, 96), 0, 0);
+    ctx.restore();
+  });
+}
+
+function drawPieChart(canvas, rows) {
+  const ctx = prepareCanvas(canvas, 360, 300);
+  if (!ctx) return;
+
+  const width = canvas.renderWidth || canvas.width;
+  const height = canvas.renderHeight || canvas.height;
+  const total = rows.reduce((sum, row) => sum + row[1], 0);
+  const colors = ["#f8c846", "#14b86a", "#4fc3f7", "#ff7369", "#b9f346", "#b388ff", "#ff9f43", "#60e6c5"];
+  const radius = Math.min(width, height) * 0.31;
+  const cx = width * 0.34;
+  const cy = height * 0.48;
+  let start = -Math.PI / 2;
+
+  ctx.clearRect(0, 0, width, height);
+
+  rows.forEach(([, value], index) => {
+    const angle = (value / total) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, radius, start, start + angle);
+    ctx.closePath();
+    ctx.fillStyle = colors[index % colors.length];
+    ctx.fill();
+    start += angle;
+  });
+
+  ctx.beginPath();
+  ctx.arc(cx, cy, radius * 0.56, 0, Math.PI * 2);
+  ctx.fillStyle = "#07120f";
+  ctx.fill();
+
+  ctx.fillStyle = "#f6fff9";
+  ctx.font = "900 22px Arial";
+  ctx.textAlign = "center";
+  ctx.fillText(total, cx, cy + 8);
+
+  rows.slice(0, 6).forEach(([team, value], index) => {
+    const y = 54 + index * 31;
+    const percent = Math.round((value / total) * 100);
+
+    ctx.fillStyle = colors[index % colors.length];
+    roundRect(ctx, width * 0.66, y - 13, 18, 18, 5);
+    ctx.fill();
+
+    ctx.fillStyle = "#dce9e2";
+    ctx.font = "700 13px Arial";
+    ctx.textAlign = "left";
+    ctx.fillText(`${fitCanvasText(ctx, team, width * 0.3)} ${percent}%`, width * 0.66 + 28, y + 1);
+  });
+}
+
+function fitCanvasText(ctx, text, maxWidth) {
+  const value = String(text || "");
+  if (ctx.measureText(value).width <= maxWidth) return value;
+
+  let trimmed = value;
+  while (trimmed.length > 1 && ctx.measureText(`${trimmed}...`).width > maxWidth) {
+    trimmed = trimmed.slice(0, -1);
+  }
+
+  return `${trimmed.trim()}...`;
+}
+
+function prepareCanvas(canvas, defaultWidth, defaultHeight) {
+  if (!canvas) return null;
+
+  const rect = canvas.getBoundingClientRect();
+  const ratio = window.devicePixelRatio || 1;
+  const width = Math.max(230, Math.round(rect.width || defaultWidth));
+  const height = Math.max(240, Math.round(rect.height || defaultHeight));
+
+  canvas.width = Math.round(width * ratio);
+  canvas.height = Math.round(height * ratio);
+  canvas.style.width = `${width}px`;
+  canvas.style.height = `${height}px`;
+  canvas.renderWidth = width;
+  canvas.renderHeight = height;
+
+  const ctx = canvas.getContext("2d");
+  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+  return ctx;
+}
+
+function roundRect(ctx, x, y, width, height, radius) {
+  const r = Math.min(radius, width / 2, height / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + width - r, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + r);
+  ctx.lineTo(x + width, y + height - r);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - r, y + height);
+  ctx.lineTo(x + r, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
 }
 
 function bindChartSearch() {
@@ -410,6 +592,10 @@ function getSavedEntries() {
   } catch (error) {
     return [];
   }
+}
+
+function clearSavedEntries() {
+  localStorage.removeItem(STORAGE_KEY);
 }
 
 function normalizeEntry(entry) {
@@ -562,10 +748,7 @@ function mergeEntries(localEntries, sheetEntries) {
   return merged;
 }
 
-function updateDataNote(count) {
-  const source = GOOGLE_SHEET_WEB_APP_URL ? "Google Sheet and browser-saved poll data" : "browser-saved poll data";
-  setText("dataNote", `Showing ${count} live entr${count === 1 ? "y" : "ies"} from ${source}. Auto-refreshing every ${LIVE_REFRESH_MS / 1000} seconds.`);
-}
+
 
 function notifyPollChanged() {
   window.dispatchEvent(new CustomEvent("uotechPollChanged"));
